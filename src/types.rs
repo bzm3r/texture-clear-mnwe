@@ -1,5 +1,5 @@
 use bevy::{
-    prelude::{Bundle, Component, Deref, DerefMut},
+    prelude::{Bundle, Component, Deref, DerefMut, Resource},
     render::view::RenderLayers,
     utils::HashMap,
 };
@@ -67,10 +67,10 @@ pub struct Tile {
     pub shapes: Vec<usize>,
 }
 
-#[derive(Debug, Default, Deref, DerefMut)]
+#[derive(Debug, Default, Deref, DerefMut, Resource)]
 pub struct Tilemap(HashMap<(u32, u32), Tile>);
 
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Resource)]
 pub struct TilemapLowerLeft {
     pub x: i64,
     pub y: i64,
@@ -80,12 +80,13 @@ pub struct TilemapLowerLeft {
 // Resources
 //
 
-#[derive(Debug, Default, Deref, DerefMut)]
+#[derive(Debug, Default, Deref, DerefMut, Resource)]
 pub struct Rects(pub Vec<Rect>);
 
-#[derive(Debug, Default, Deref, DerefMut)]
+#[derive(Debug, Default, Deref, DerefMut, Resource)]
 pub struct TileIndexIter(pub Option<itertools::Product<Range<u32>, Range<u32>>>);
 
+#[derive(Resource)]
 pub struct RenderingDoneChannel {
     pub sender: Sender<()>,
     pub receiver: Receiver<()>,
@@ -119,7 +120,6 @@ pub struct AccumulationCam;
 
 #[derive(Bundle, Default)]
 pub struct LyonShapeBundle {
-    #[bundle]
     pub lyon: bevy_prototype_lyon::entity::ShapeBundle,
     pub marker: LyonShape,
 }

@@ -29,7 +29,7 @@ use utils::{generate_random_elements, get_grid_shape, tilemap_stats_and_debug};
 
 use crate::types::{AccumulationCam, ACCUMULATION_CAMERA_PRIORITY, DOWNSCALING_PASS_LAYER};
 
-#[derive(Deref)]
+#[derive(Deref, Resource)]
 struct HiResHandle(Handle<Image>);
 
 #[derive(Deref)]

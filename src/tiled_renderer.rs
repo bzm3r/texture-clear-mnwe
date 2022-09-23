@@ -14,7 +14,7 @@ use bevy_prototype_lyon::prelude::*;
 use crossbeam_channel::bounded;
 
 use crate::types::{
-    DrawTileEvent, Rects, LyonShape, LyonShapeBundle, Rect, RenderingCompleteEvent,
+    DrawTileEvent, LyonShape, LyonShapeBundle, Rect, Rects, RenderingCompleteEvent,
     RenderingDoneChannel, Tilemap, TilemapLowerLeft, ALPHA, DOWNSCALING_PASS_LAYER, WIDTH,
 };
 use crate::{
@@ -82,14 +82,7 @@ fn spawn_shapes_system(
     tilemap: Res<Tilemap>,
     rects: Res<Rects>,
     mut draw_ev: EventReader<DrawTileEvent>,
-    mut existing_lyon_shapes: Query<
-        (
-            &mut bevy_prototype_lyon::entity::Path,
-            &mut Transform,
-            &mut Visibility,
-        ),
-        With<LyonShape>,
-    >,
+    mut existing_lyon_shapes: Query<(&mut Path, &mut Transform, &mut Visibility), With<LyonShape>>,
 ) {
     for DrawTileEvent(key) in draw_ev.iter() {
         let tile = tilemap.get(key).unwrap();
