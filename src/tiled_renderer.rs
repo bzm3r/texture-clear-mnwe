@@ -159,7 +159,7 @@ fn spawn_shapes_system(
                 *existing_transform = bundle.lyon.transform;
                 vis.is_visible = true;
             } else {
-                commands.spawn_bundle(bundle);
+                commands.spawn(bundle);
             }
         }
 
@@ -239,7 +239,7 @@ fn spawn_cameras_system(
 
         // Post processing 2d quad, with material using the render texture done by the main camera, with a custom shader.
         commands
-            .spawn_bundle(MaterialMesh2dBundle {
+            .spawn(MaterialMesh2dBundle {
                 mesh: mesh_handle.into(),
                 material: material_handle,
                 ..default()

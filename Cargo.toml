@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 bevy_prototype_lyon = { git = "https://github.com/colepoirier/bevy_prototype_lyon", branch = "tracking-bevy-main" }
-bevy_pancam = "0.6.1"
+bevy_pancam = { git = "https://github.com/colepoirier/bevy_pancam", branch = "main" }
 crossbeam-channel = "0.5.5"
 geo = "0.23.0"
 csv = "1.1.6"
@@ -14,11 +14,13 @@ rand = "0.8.5"
 
 [dependencies.bevy]
 git = "https://github.com/bevyengine/bevy"
+rev = "e7cd9c1b8629d0d851f74d4d129ec8832457e8f5"
 default-features = false
 features = ["bevy_winit", "render", "bevy_asset"]
 
 [target.'cfg(unix)'.dependencies.bevy]
 git = "https://github.com/bevyengine/bevy"
+rev = "e7cd9c1b8629d0d851f74d4d129ec8832457e8f5"
 default-features = false
 features = [
     "bevy_winit",
@@ -31,5 +33,5 @@ features = [
 [profile.dev.package."*"]
 opt-level = 1
 
-[profile.release]
-debug = true
+# [profile.release]
+# debug = true

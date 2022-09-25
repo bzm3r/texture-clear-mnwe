@@ -32,7 +32,7 @@ use crate::types::{AccumulationCam, ACCUMULATION_CAMERA_PRIORITY, DOWNSCALING_PA
 #[derive(Deref, Resource)]
 struct HiResHandle(Handle<Image>);
 
-#[derive(Deref)]
+#[derive(Deref, Resource)]
 struct AccumulationHandle(Handle<Image>);
 
 pub const TEXTURE_DIM: u32 = 4096;
@@ -45,9 +45,9 @@ fn main() {
             width: 1920.0,
             height: 1080.0,
             present_mode: bevy::window::PresentMode::Immediate,
-            position: bevy::window::WindowPosition::Centered(
-                bevy::window::MonitorSelection::Current,
-            ),
+            // position: bevy::window::WindowPosition::Centered(
+            //     bevy::window::MonitorSelection::Current,
+            // ),
             ..default()
         })
         .add_plugins(DefaultPlugins)
@@ -110,7 +110,7 @@ fn initialize_hi_res_resources(commands: &mut Commands, images: &mut Assets<Imag
         .projection
         .update(size.width as f32, size.height as f32);
 
-    commands.spawn_bundle(hires_cam).insert(HiResCam);
+    commands.spawn(hires_cam).insert(HiResCam);
     commands.insert_resource(HiResHandle(handle));
 }
 
@@ -151,7 +151,7 @@ fn initialize_accumulation_resources(commands: &mut Commands, images: &mut Asset
 
     // sprite with the accumulation texture
     commands
-        .spawn_bundle(SpriteBundle {
+        .spawn(SpriteBundle {
             sprite: Sprite {
                 custom_size: Some(Vec2::new(size.width as f32, size.height as f32)),
                 anchor: Anchor::BottomLeft,
@@ -166,7 +166,7 @@ fn initialize_accumulation_resources(commands: &mut Commands, images: &mut Asset
     // sprite that is 10% larger than the accumulation texture and underneath/futher from the camera
     // than the accumulation texture sprite to indicate where the texture is/outline it
     commands
-        .spawn_bundle(SpriteBundle {
+        .spawn(SpriteBundle {
             sprite: Sprite {
                 custom_size: Some(Vec2::new(size.width as f32 * 1.1, size.height as f32 * 1.1)),
                 anchor: Anchor::BottomLeft,
@@ -181,7 +181,7 @@ fn initialize_accumulation_resources(commands: &mut Commands, images: &mut Asset
         .insert(MAIN_CAMERA_LAYER);
 
     commands
-        .spawn_bundle(Camera2dBundle {
+        .spawn(Camera2dBundle {
             camera: Camera {
                 priority: ACCUMULATION_CAMERA_PRIORITY,
                 target: RenderTarget::Image(handle.clone()),
@@ -216,7 +216,7 @@ fn setup(mut commands: Commands, mut images: ResMut<Assets<Image>>) {
     camera.projection.scale = 8.5;
 
     commands
-        .spawn_bundle(camera)
+        .spawn(camera)
         .insert(MAIN_CAMERA_LAYER)
         .insert(MainCamera)
         .insert(PanCam::default());
