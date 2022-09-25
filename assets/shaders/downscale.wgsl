@@ -12,7 +12,7 @@ fn fragment(
     #import bevy_sprite::mesh2d_vertex_output
 ) -> @location(0) vec4<f32> {
     // Get screen position with coordinates from 0 to 1
-    let uv = position.xy / vec2<f32>(view.width, view.height);
+    let uv = position.xy / vec2<f32>(view.viewport[2], view.viewport[3]);
 
     var output_color = textureSample(our_texture, our_sampler, uv);
 
